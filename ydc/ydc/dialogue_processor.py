@@ -9,9 +9,13 @@ def process_dialogue(dialogue: Dialogue):
     During and after processing, dialogue is changed in DB, and as an object
     :param dialogue: dialogue to process
     """
+    if dialogue.request is None or dialogue.request.isspace():
+        return
+
     # Synchronous send and receive from RabbitMQ
     send_to_rabbit(dialogue)
     processed_dialogue = receive_from_rabbit(dialogue)
+
     if processed_dialogue is None or processed_dialogue.response is None or processed_dialogue.response.isspace():
         return
 
