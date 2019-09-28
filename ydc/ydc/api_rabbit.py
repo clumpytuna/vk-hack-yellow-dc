@@ -3,6 +3,7 @@ from json import dumps, loads
 
 from .models_dialogue import Dialogue
 
+
 QUEUE_REQUESTS = 'request'
 QUEUE_RESPONSES = 'response'
 
