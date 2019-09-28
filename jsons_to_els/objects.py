@@ -34,6 +34,7 @@ def main():
             'path': data['path'],
             'year': data['year'],
             'get_year': data['get_year'],
+            'authors': [data['authors'][k]['ru'] for k in data['authors'].keys()] if data['authors'] != '' else '',
             'type': data['type']['ru'],
             'country': data['country']['ru'] if data['country'] != '' else '',
             'name': data['name']['ru'],

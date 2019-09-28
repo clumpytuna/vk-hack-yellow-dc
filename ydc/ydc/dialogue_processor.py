@@ -9,12 +9,18 @@ def process_dialogue(dialogue: Dialogue):
     During and after processing, dialogue is changed in DB, and as an object
     :param dialogue: dialogue to process
     """
-    # "echo" + RabbitMQ check
+    if dialogue.request is None or dialogue.request.isspace():
+        return
+
+    # Synchronous send and receive from RabbitMQ
     send_to_rabbit(dialogue)
+    processed_dialogue = receive_from_rabbit(dialogue)
 
-    dialogue.response = dialogue.request
-    ogg = text_to_speech(dialogue.request)
-    dialogue.save_ogg(ogg)
+    if processed_dialogue is None or processed_dialogue.response is None or processed_dialogue.response.isspace():
+        return
 
-    dialogue.save()
+    ogg = text_to_speech(processed_dialogue.response)
+    processed_dialogue.save_ogg(ogg)
+    processed_dialogue.save()
+
     dialogue.refresh_from_db()
