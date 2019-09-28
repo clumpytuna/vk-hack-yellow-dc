@@ -27,6 +27,11 @@ if SPEECHKIT_API_KEY is None:
     raise Exception("SPEECHKIT_API_KEY is not set")
 
 
+# Special settings
+
+RESPONSES_OGG_DIRECTORY = '/tmp/responses_ogg/'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'ydc',
 ]
 
 MIDDLEWARE = [
@@ -104,13 +110,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-RU'
 
+USE_TZ = False
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
