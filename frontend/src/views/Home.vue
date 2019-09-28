@@ -116,6 +116,10 @@
         this.messages.push({ text, isQuestion });
         await this.$nextTick();
         this.scrollToTop();
+
+        const sleep = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
+        await sleep(500);
+        this.scrollToTop();
       },
       async sendTextMessage(text) {
         this.addMessage(text, true);
