@@ -95,7 +95,7 @@ def response_text(request) -> Response:
     if dialogue.response is None:
         return Response('There is no response for this dialogue (yet?)', HTTP_423_LOCKED)
 
-    return Response(dialogue.response)
+    return Response(dialogue.response, content_type='text/plain')
 
 
 @api_view(['POST'])
