@@ -20,8 +20,5 @@ def process_question(request):
 
     result = text_to_speech(text)
 
-    file = open('/tmp/result.ogg', 'wb')
-    file.write(result)
-
-    response = HttpResponse(result, content_type='application/octet-stream')
+    response = HttpResponse(result, content_type='audio/ogg')
     return response
