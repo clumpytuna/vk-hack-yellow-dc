@@ -21,6 +21,9 @@ DEBUG = True
 ALLOWED_HOSTS = '*'
 
 
+SPEECHKIT_API_KEY = os.environ.get('SPEECHKIT_API_KEY')
+
+
 # Application definition
 
 INSTALLED_APPS = [
