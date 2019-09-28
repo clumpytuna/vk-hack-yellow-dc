@@ -36,7 +36,7 @@ def main():
             'text': data['text']['ru'],
             'img': data['picture'],
             'closed': data['closed'],
-            'schedule': data['schedule'],
+            'schedule': str(data['schedule']) if data['schedule'] != '' else None,
             'coords': data['yamapcoords'],
             'brief': data['brief']['ru'],
             'address': data['adress']['ru'],
@@ -46,7 +46,7 @@ def main():
         print("Object {}\n{}".format(data_id, object_dumped))
 
         response = send_json_to_els(index, data_id, object_dumped)
-        print("Add to Elastic: Code {}, Content {}".format(data_id, response.status_code, str(response.content)))
+        print("Add to Elastic: Code {}, Content {}".format(response.status_code, str(response.content)))
 
 
 if __name__ == '__main__':
