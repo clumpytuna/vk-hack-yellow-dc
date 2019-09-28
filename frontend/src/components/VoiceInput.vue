@@ -7,7 +7,7 @@
           v-if="!isRecording"
           width="48"
           height="48"
-          src="/img/icon.svg"
+          src="/img/record.png"
           @click="isRecording ? stopRecording() : startRecording()"
         >
         <v-icon
@@ -44,7 +44,7 @@
               v-else
               width="24"
               height="24"
-              src="/img/icon.svg"
+              src="/img/record.png"
               @click="setVoiceMode(true)"
             >
           </template>

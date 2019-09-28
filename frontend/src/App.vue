@@ -37,7 +37,7 @@
 
 <style>
   #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: GMTypewriter, 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: white !important;
@@ -45,6 +45,22 @@
 
   * {
     box-sizing: border-box !important;
+  }
+
+  @font-face {
+    font-family: 'GMText';
+    font-weight: 400;
+    font-style: normal;
+
+    src: url('/fonts/GMTextRegular.woff');
+  }
+
+  @font-face {
+    font-family: 'GMTypewriter';
+    font-weight: 400;
+    font-style: normal;
+
+    src: url('/fonts/GMTypewriterRegular.woff');
   }
 </style>
 

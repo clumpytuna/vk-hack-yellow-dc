@@ -74,13 +74,14 @@
   .message-question {
     margin-left: auto;;
     /*background: var(--v-primary-base);*/
-    background: #4a76a8;
+    background: #5100d3;
     color: white;
     border-radius: var(--radius) var(--radius) 0 var(--radius);
   }
 
   .message-answer {
-    background: #efeff7;
+    /*background: #efeff7;*/
+    background: #e9e9e9;
     border-radius: 0 var(--radius) var(--radius) var(--radius);
   }
 </style>
@@ -148,7 +149,13 @@
         this.requestAnswer();
       },
       async requestAnswer() {
-        const response = await postForm('/response_text', { id: this.dialogueId });
+        let response;
+        try {
+          response = await postForm('/response_text', { id: this.dialogueId });
+        } catch {
+          this.onSendError();
+          return;
+        }
         this.addMessage(response.data, false);
         this.isLoadingResponse = false;
       },
