@@ -71,6 +71,9 @@ def request_audio(request) -> Response:
         return Response("'speech' parameter with OGG file must be set for this API.", HTTP_400_BAD_REQUEST)
 
     text = speech_to_text(speech)
+    if text is None or text.isspace():
+        return Response(None)
+
     dialogue.add_request(text)
 
     # Entry point processing call
