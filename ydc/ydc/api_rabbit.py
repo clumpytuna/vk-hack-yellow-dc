@@ -20,9 +20,6 @@ def _prepare():
     global channel_send
     global channel_receive
 
-    if connection is not None and channel_send is not None and channel_receive is not None:
-        return
-
     credentials = pika.PlainCredentials('ydc', 'ydcpasswd')
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='demo134.bravo.vkhackathon.com', credentials=credentials))
 
