@@ -12,22 +12,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*4(fd7#&$$5f=e$xy0)*2a^v8)z)1(azer)!*f+#vf35rzeg7n'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = '*'
 
 
+# Secrets
+
+SECRET_KEY = '*4(fd7#&$$5f=e$xy0)*2a^v8)z)1(azer)!*f+#vf35rzeg7n'
+
 SPEECHKIT_API_KEY = os.environ.get('SPEECHKIT_API_KEY')
+if SPEECHKIT_API_KEY is None:
+    raise Exception("SPEECHKIT_API_KEY is not set")
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
