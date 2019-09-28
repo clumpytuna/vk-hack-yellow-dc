@@ -16,7 +16,7 @@ def process_dialogue(dialogue: Dialogue):
         return
 
     ogg = text_to_speech(processed_dialogue.response)
-    dialogue.save_ogg(ogg)
+    processed_dialogue.save_ogg(ogg)
+    processed_dialogue.save()
 
-    dialogue.save()
     dialogue.refresh_from_db()
