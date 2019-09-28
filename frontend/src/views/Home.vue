@@ -9,9 +9,11 @@
             {{ message.text }}
           </div>
         </div>
+        <div style="height: 75px; content: '';"></div>
       </div>
     </div>
     <voice-input
+      class="input"
       :isLoadingResponse="isLoadingResponse"
       @sendTextMessage="sendTextMessage"
       @sendVoiceMessage="sendVoiceMessage"
@@ -25,6 +27,14 @@
   .messages-wrapper {
     flex: 1;
     position: relative;
+  }
+
+  .input {
+    background: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 
   .messages {
@@ -91,6 +101,10 @@
       };
     },
     async mounted() {
+      // for (let i = 0; i < 10; ++i) {
+      //   this.messages.push({ text: `Text ${i}`, isQuestion: i % 2 === 0 });
+      // }
+
       const response = await axios.post('/create', null);
       this.dialogueId = response.data.id;
     },
@@ -98,8 +112,13 @@
       scrollToTop() {
         this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
       },
+      async addMessage(text, isQuestion) {
+        this.messages.push({ text, isQuestion });
+        await this.$nextTick();
+        this.scrollToTop();
+      },
       async sendTextMessage(text) {
-        this.messages.push({ text, isQuestion: true });
+        this.addMessage(text, true);
         this.isLoadingResponse = true;
         try {
           await postForm('/request_text', { id: this.dialogueId, request: text });
@@ -121,17 +140,17 @@
         }
 
         const text = response.data.speech;
-        this.messages.push({ text, isQuestion: true });
+        this.addMessage(text, true);
         this.requestAnswer();
       },
       async requestAnswer() {
         const response = await postForm('/response_text', { id: this.dialogueId });
-        this.messages.push({ text: response.data, isQuestion: false });
+        this.addMessage(response.data, false);
         this.isLoadingResponse = false;
       },
       onSendError() {
         this.isLoadingResponse = false;
-        this.messages.push({ text: 'Что-то пошло не так. Пожалуйста, попробуйте ещё раз.', isQuestion: false });
+        this.addMessage('Что-то пошло не так. Пожалуйста, попробуйте ещё раз.', false);
       },
     },
   };
