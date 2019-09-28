@@ -2,7 +2,7 @@
 
 import pika
 from json import dumps, loads
-from .ML.dialogue import DialogueHandler
+from dialogue import DialogueHandler
 
 QUEUE_REQUESTS = 'request'
 QUEUE_RESPONSES = 'response'

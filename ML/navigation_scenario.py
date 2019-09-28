@@ -1,6 +1,7 @@
 from ml_utils import *
 from dialogue import *
 from path_finder.path import find_path
+import numpy as np
 
 
 class NavigationScenario(BaseScenario):

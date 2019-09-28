@@ -2,8 +2,10 @@ import sys
 sys.path.append('/home/captain/vk-hack-yellow-dc/')
 from utils import elastic_search
 from deeppavlov import configs, build_model
-from .ml_utils import lemmatize, apply_lemm
+from ml_utils import lemmatize, apply_lemm
 from path_finder.path import find_path
+from navigation_scenario import NavigationScenario
+import numpy as np
 
 
 #NAVIGATION 
@@ -37,7 +39,7 @@ def classify(text, find_sets):
 
 class Dialogue:
     def __init__(self, find_sets, models):
-        self.scenarios = [NavigationScenario(), CultureScenario(), OtherScenario()]
+        self.scenarios = [NavigationScenario(), NavigationScenario(), NavigationScenario()]
         self.find_sets = find_sets
         self.models = models
         self.state = {}
