@@ -30,7 +30,9 @@
     * `speech`: Audio file, OGG Vorbis encoded
 
 #### Response
-* HTTP 200
+* Content-type: `application/json`
+* Content
+    * `speech`: Decoded question. If no speech was present, return empty string
 
 
 ### Get response in text format `/response_text`
@@ -41,7 +43,7 @@
 
 #### Response
 * Content-type: `text/plain`
-* Content: Response, enclosed in double brackets (`"this is some response"`)
+* Content: Response, enclosed in double brackets (e.g. `"this is some response"`)
 
 
 ### Get response in audio format `/response_audio`

@@ -44,7 +44,7 @@ def request_text(request) -> Response:
     except KeyError:
         return Response('Request is not present in the request', HTTP_400_BAD_REQUEST)
 
-    dialogue.add_request(text)
+    dialogue.request = text
 
     # Entry point processing call
     process_dialogue(dialogue)
@@ -72,14 +72,14 @@ def request_audio(request) -> Response:
 
     text = speech_to_text(speech)
     if text is None or text.isspace():
-        return Response(None)
+        return Response({'speech': ''})
 
-    dialogue.add_request(text)
+    dialogue.request = text
 
     # Entry point processing call
     process_dialogue(dialogue)
 
-    return Response(None)
+    return Response({'speech': text})
 
 
 @api_view(['POST'])

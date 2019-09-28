@@ -1,4 +1,3 @@
-import json
 import os
 import logging
 
@@ -11,23 +10,12 @@ logger = logging.getLogger(__name__)
 
 
 class Dialogue(models.Model):
-    DEFAULT_REQUESTS = json.dumps({
-        'version': 1,
-        'raw': [],
-    })
-
     id = models.AutoField(primary_key=True)
     ts = models.DateTimeField(null=False, help_text='Created')
-    requests = models.TextField(null=False, default=DEFAULT_REQUESTS, help_text='Requests by user, JSON-encoded')
+    meta = models.TextField(null=False, default='', help_text='Arbitrary JSON-encoded metadata for this dialogue')
+    request = models.TextField(null=True, help_text='Current question (text)')
     response = models.TextField(null=True, help_text='Current response (text)')
-    _audio_response = models.TextField(null=True, help_text='FS path to current response (audio)')
-
-    def add_request(self, request: str):
-        requests = json.loads(self.requests)
-
-        requests['raw'].append(request)
-
-        self.requests = json.dumps(requests)
+    _audio_response = models.TextField(null=True, help_text='FS path to current response (path to audio)')
 
     def save_ogg(self, b: bytes):
         if self._audio_response is not None:
