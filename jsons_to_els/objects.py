@@ -35,13 +35,13 @@ def main():
             'year': data['year'],
             'get_year': data['get_year'],
             'type': data['type']['ru'],
-            'country': data['country']['ru'],
+            'country': data['country']['ru'] if data['country'] != '' else '',
             'name': data['name']['ru'],
             'text': data['text']['ru'],
             'from': data['from']['ru'],
-            'img': data['gallery']['1']['id01'],
-            'building': data['building'],
-            'hall': data['hall'],
+            'img': data['gallery']['1']['id01'] if data['gallery'] != '' else '',
+            'building': data.get('building', ''),
+            'hall': data.get('hall', ''),
         }
 
         object_dumped = json.dumps(object_result, ensure_ascii=False)
