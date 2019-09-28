@@ -16,6 +16,7 @@ class Dialogue(models.Model):
     request = models.TextField(null=True, help_text='Current question (text)')
     response = models.TextField(null=True, help_text='Current response (text)')
     _audio_response = models.TextField(null=True, help_text='FS path to current response (path to audio)')
+    rabbit_updated = models.BooleanField(null=False, default=False)
 
     def save_ogg(self, b: bytes):
         if self._audio_response is not None:
