@@ -5,6 +5,15 @@ import chardet
 from nltk.tokenize import WordPunctTokenizer
 import numpy as np
 
+
+class BaseScenario:
+    def __init__(self):
+        pass
+    
+    def answer(self, state):
+        pass
+
+
 def lemmatize(text):
     text = " ".join(word.lower() for word in text.split()) #lowercasing and removing short words 
     text = re.sub('\-\s\r\n\s{1,}|\-\s\r\n|\r\n', '', text) #deleting newlines and line-breaks
