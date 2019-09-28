@@ -1,6 +1,8 @@
 import pika
 from json import dumps, loads
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models_dialogue import Dialogue
 
 
@@ -62,10 +64,15 @@ def receive_from_rabbit(dialogue: Dialogue) -> Dialogue:
     while True:
         ok, prop, body = channel_receive.basic_get(queue=QUEUE_RESPONSES, auto_ack=True)
         if ok is None:
-            break
+            # break
+            continue
 
         rabbit_response = loads(body)
-        current_dialogue = Dialogue.objects.get(id=rabbit_response['id'])
+        print('RECEIVED {}'.format(rabbit_response))
+        try:
+            current_dialogue = Dialogue.objects.get(id=int(rabbit_response['id']))
+        except ObjectDoesNotExist:
+            continue
         current_dialogue.response = rabbit_response.get('response')
         current_dialogue.meta = rabbit_response.get('meta', '')
 
