@@ -38,6 +38,7 @@ def main():
             'name': data['name']['ru'],
             'text': data['text']['ru'],
             'price': data['price']['ru'],
+            'type': data['type']['ru'],
             'audioguide': data['audioguide']['ru'],
             'building': data['building']['0'],
             'ticket': data['ticket'],
