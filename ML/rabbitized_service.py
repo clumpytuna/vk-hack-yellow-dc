@@ -4,6 +4,8 @@ import pika
 from json import dumps, loads
 from dialogue import DialogueHandler
 
+import traceback
+
 QUEUE_REQUESTS = 'request'
 QUEUE_RESPONSES = 'response'
 handler = DialogueHandler()
@@ -38,7 +40,12 @@ def _callback(channel, method, properties, body):
 
     # Handler here
     global handler
-    result = handler.process(r)
+    try:
+        result = handler.process(r)
+    except:
+        traceback.print_exc()
+        result = {'id': r['id'], 'response': 'Ничего не нашлось :-(', 'meta': ''}
+
     result_to_return = {
         'id': result['id'],
         'response': result['text'],

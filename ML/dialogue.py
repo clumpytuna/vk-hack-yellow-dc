@@ -55,8 +55,6 @@ class Dialogue:
             current_class = classify(text, self.find_sets)
         try:
             return self.scenarios[current_class].answer(self.state, self.models)
-        except ValueError:
-            return {'text': 'Ничего не нашлось :-(', 'meta': ''}
     
 
 class DialogueHandler:

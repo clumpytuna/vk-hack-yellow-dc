@@ -31,7 +31,7 @@ def elastic_search(dataset: str, fields: list, query: str) -> list:
     response = raw_response.json()
 
     if response['hits']['total']['value'] == 0:
-        raise ValueError()
+        raise ValueError(query)
 
     result = [h['_source'] for h in response['hits']['hits']]
 
