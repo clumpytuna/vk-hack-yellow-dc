@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://demo134.bravo.vkhackathon.com/api';
+export const baseURL = 'https://demo134.bravo.vkhackathon.com/api';
+axios.defaults.baseURL = baseURL;
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
 export async function postForm(url, data: string) {

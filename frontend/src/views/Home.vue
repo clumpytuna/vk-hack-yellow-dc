@@ -89,7 +89,7 @@
 <script>
   import VoiceInput from '@/components/VoiceInput';
   import axios from 'axios';
-  import { postForm } from '@/plugins/axios';
+  import { baseURL, postForm } from '@/plugins/axios';
 
   export default {
     name: 'home',
@@ -132,7 +132,7 @@
           return;
         }
 
-        await this.requestAnswer();
+        await this.requestTextAnswer();
       },
       async sendVoiceMessage(blob) {
         this.isLoadingResponse = true;
@@ -146,9 +146,9 @@
 
         const text = response.data.speech;
         this.addMessage(text, true);
-        this.requestAnswer();
+        await this.requestTextAnswer();
       },
-      async requestAnswer() {
+      async requestTextAnswer() {
         let response;
         try {
           response = await postForm('/response_text', { id: this.dialogueId });
@@ -158,10 +158,25 @@
         }
         this.addMessage(response.data, false);
         this.isLoadingResponse = false;
+
+        await this.requestVoiceAnswer();
+      },
+      async requestVoiceAnswer() {
+        const formData = new FormData();
+        formData.append('id', this.dialogueId);
+        const requestOptions = { method: 'POST', body: formData };
+        const response = await fetch(baseURL + '/response_audio', requestOptions);
+        const result = await response.body.getReader().read();
+
+        const blob = new Blob([result.value], { type: 'audio/webm;codecs="vorbis"' });
+        const url = window.URL.createObjectURL(blob);
+        const audio = new Audio();
+        audio.src = url;
+        await audio.play();
       },
       onSendError() {
         this.isLoadingResponse = false;
-        this.addMessage('Что-то пошло не так. Пожалуйста, попробуйте ещё раз.', false);
+        this.addMessage('Хм. Давайте попробуем по другому.', false);
       },
     },
   };
