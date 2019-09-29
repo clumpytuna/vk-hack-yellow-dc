@@ -14,7 +14,7 @@ class NavigationScenario(BaseScenario):
         # RETURNS
         if state['return_to_id'] == 0:
             state['return_to_id'] = -1
-            if (state['return_message'] == 'where' or state['return_message'] == 'where_want'):
+            if state['return_message'] == 'where' or state['return_message'] == 'where_want':
                 if state['return_message'] == 'where':
                     back_id = -2
                 elif state['return_message'] == 'where_want':
@@ -65,10 +65,10 @@ class NavigationScenario(BaseScenario):
                 if 'да' in cur_text.lower():
                     state['return_to_id'] = 0
                     state['return_message'] = 'where_want'
-                    result = {'text': 'В каком зале вы сейчас находитесь?', 'meta':''}
+                    result = {'text': 'В каком зале Вы сейчас находитесь?', 'meta':''}
                     return result
                 else:
-                    return {'text': 'Чем вы интересуетесь?', 'meta':''}
+                    return {'text': 'Чем Вы интересуетесь?', 'meta':''}
         tokens, ners = models['ner_model']([text])
         tokens = np.array(tokens[0])
         ners = np.array(ners[0])
@@ -95,8 +95,7 @@ class NavigationScenario(BaseScenario):
                 buld = 'gallery'
             else:
                 buld = 'main'
-            result_text = "Вы можете найти " + str(search_queue[2]) + " в зале " + str(hall) + '.'
-            result_text += ' Хотите ли вы туда пройти?'
+            result_text = "Вы можете найти экспонат \"{}\" в зале {}. Хотите ли Вы туда пройти?".format(str(best_search['name']), str(hall))
             state['return_to_id'] = 0
             state['return_message'] = 'want'
             result = {'text': result_text, 'meta': ""}
@@ -104,8 +103,8 @@ class NavigationScenario(BaseScenario):
         elif len(set(path_words) & text_lemm_set) > 0: # Хочу пройти к 
             state['return_to_id'] = 0
             state['return_message'] = 'where'
-            result = {'text': 'В каком зале вы сейчас находитесь?', 'meta': ''}
+            result = {'text': 'В каком зале Вы сейчас находитесь?', 'meta': ''}
             return result
         else:
-            result = {'text': 'Я вас не понял. Давайте поговорим о чем-нибудь другом.', 'meta':''}
+            result = {'text': 'Я Вас не понял. Давайте поговорим о чем-нибудь другом.', 'meta': ''}
             return result
