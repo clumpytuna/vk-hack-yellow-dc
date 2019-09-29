@@ -81,7 +81,7 @@ class NavigationScenario(BaseScenario):
             text_lemm_set = set(lemmatize_text.split())
             find_words = apply_lemm(['где', 'в каком зале', 'находится', 'висит', 'стоит', 'выставляется'])
             path_words = apply_lemm(['как пройти', 'пройти', 'путь', 'маршрут', 'построй'])
-            toilet = apply_lemm(['туалет','гардероб', 'камера хранения', 'камера', 'хранения'])
+            toilet = apply_lemm(['туалет','гардероб', 'камера хранения', 'камера', 'хранения', 'уборная'])
             if len(set(toilet) & text_lemm_set) > 0:
                 return {'text': 'Идите к лестнице, спуститесь на первый этаж. По лестнице у входа спуститесь ниже.', 'meta':''}
             elif len(set(find_words) & text_lemm_set) > 0:

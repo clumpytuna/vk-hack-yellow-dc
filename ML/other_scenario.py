@@ -87,7 +87,7 @@ class OtherScenario(BaseScenario):
             events = [event for event in events if 'ru' in event['name']]
             events = events[:3]
             if events:
-                text = '.\n\n'.join([event['name']['ru'] for event in events]) + '.'
+                text = '.\n--\n'.join([event['name']['ru'] for event in events]) + '.'
                 return {'text': text, 'meta': ''}
             else:
                 return {'text': 'Не нашлось событий :(', 'meta': ''}
