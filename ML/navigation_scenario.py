@@ -94,6 +94,8 @@ class NavigationScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 hall = best_search['hall']
+                if hall == '':
+                    return {'text': 'К сожалению, этот экспонат сейчас хранится в архиве. Подсказать что-нибудь ещё?'}
                 building = best_search['building']
                 state['history_text'] += best_search['text']
                 if building == '117':
