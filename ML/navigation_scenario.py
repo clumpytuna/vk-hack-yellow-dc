@@ -127,8 +127,10 @@ class NavigationScenario(BaseScenario):
             traceback.print_exc()
             if state['history_object'] is not None and len(state['history_object']['text']) > 10:
                 result = {'text': models['squad_ru']([state['history_object']['text']], [state['history_user'][-1]])[0]}
-            else:
-                result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом. Что Вам нравится?', 'meta':''}
-                state['return_to_id'] = 3
-                state['return_message'] = ''
+                if len(result) > 0:
+                    return result
+
+            result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом. Что Вам нравится?', 'meta':''}
+            state['return_to_id'] = 3
+            state['return_message'] = ''
             return result
