@@ -85,8 +85,10 @@ class NavigationScenario(BaseScenario):
                 if 'ORG' in cl:
                     mask[i] = False
             search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask])]
+            print('Search queue: {}'.format(str(search_queue)))
             search_result = models['search'](*search_queue) 
             best_search = search_result[0]
+            print('Search result: {}'.format(best_search))
             hall = best_search['hall']
             building = best_search['building']
             if building == '117':
