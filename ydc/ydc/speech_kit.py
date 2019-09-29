@@ -42,7 +42,7 @@ def speech_to_text(speech: bytes) -> str:
 
 
 def text_to_speech(text: str) -> bytes:
-    response = requests.post(URL_SYNTHESIZE + URL_SYNTHESIZE_OPTIONS, data={'text': text}, headers=HEADERS_SYNTHESIZE)
+    response = requests.post(URL_SYNTHESIZE + URL_SYNTHESIZE_OPTIONS, data={'text': text, 'voice': 'ermil', 'emotion': 'good'}, headers=HEADERS_SYNTHESIZE)
 
     if response.status_code != 200:
         logger.error('Speech Kit responded with code {}. Content: {}'.format(response.status_code, response.text))
