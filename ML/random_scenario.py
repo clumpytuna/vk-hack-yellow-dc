@@ -28,7 +28,7 @@ class RandomScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 result_text = "Рекомендую посмотреть экспонат \"" + str(best_search['name']) + "\". Подсказать что-нибудь ещё?"
-                state['history_text'] += best_search['text']
+                state['history_text'] = best_search['text']
                 return {'text':result_text}
             # Returns
             state['return_to_id'] = 3

@@ -41,7 +41,7 @@ class NavigationScenario(BaseScenario):
                     print('Search result: {}'.format(best_search))
                     hall_to = best_search['hall']
                     building = best_search['building']
-                    state['history_text'] += best_search['text']
+                    state['history_text'] = best_search['text']
                     if building == '117':
                         buld = 'gallery'
                     else:
@@ -66,13 +66,13 @@ class NavigationScenario(BaseScenario):
                     return result
                 if state['return_message'] == 'want':
                     cur_text = state['history_user'][-1]
-                    if 'да' in cur_text.lower():
+                    if 'да' in cur_text.lower() or 'хочу' in cur_text.lower() or 'конечно' in cur_text.lower():
                         state['return_to_id'] = 0
                         state['return_message'] = 'where_want'
                         result = {'text': 'В каком зале Вы сейчас находитесь?', 'meta':''}
                         return result
                     else:
-                        return {'text': 'Чем Вы интересуетесь?', 'meta':''}
+                        return {'text': 'Чем Вы интересуетесь?', 'meta': ''}
             tokens, ners = models['ner_model']([text])
             tokens = np.array(tokens[0])
             ners = np.array(ners[0])
@@ -97,7 +97,7 @@ class NavigationScenario(BaseScenario):
                 if hall == '':
                     return {'text': 'К сожалению, этот экспонат сейчас хранится в архиве. Подсказать что-нибудь ещё?'}
                 building = best_search['building']
-                state['history_text'] += best_search['text']
+                state['history_text'] = best_search['text']
                 if building == '117':
                     buld = 'gallery'
                 else:

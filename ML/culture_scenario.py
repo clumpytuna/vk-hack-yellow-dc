@@ -44,7 +44,7 @@ class CultureScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 result_text = best_search['text']
-                state['history_text'] += best_search['text']
+                state['history_text'] = best_search['text']
                 return {'text':result_text}
             if len(set(time_words) & text_lemm_set) > 0:
                 print("Date case")
@@ -54,7 +54,7 @@ class CultureScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 result_text = "Данное произведение было создано в " + str(best_search['year']) + " году."
-                state['history_text'] += best_search['text']
+                state['history_text'] = best_search['text']
                 return {'text':result_text}
             if len(set(author_words) & text_lemm_set) > 0:
                 print("Author case")
@@ -64,7 +64,7 @@ class CultureScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 result_text = "Автор данной работы - " + str(best_search['authors'][0]) + "."
-                state['history_text'] += best_search['text']
+                state['history_text'] = best_search['text']
                 return {'text':result_text}
             if len(set(country_words) & text_lemm_set) > 0:
                 search_queue = ['objects', ['name', 'text'], ' '.join(tokens[mask]) if len(tokens[mask]) != 0 else text]
@@ -73,7 +73,7 @@ class CultureScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 result_text = "Произведение было создано в стране " + str(best_search['country']) + '.'
-                state['history_text'] += best_search['text']
+                state['history_text'] = best_search['text']
                 return {'text':result_text}
             raise Exception()
         except:
