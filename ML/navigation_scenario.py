@@ -19,8 +19,10 @@ class NavigationScenario(BaseScenario):
                 state['return_to_id'] = -1
                 if state['return_message'] == 'where' or state['return_message'] == 'where_want':
                     if state['return_message'] == 'where':
+                        state['return_message'] = ''
                         back_id = -2
                     elif state['return_message'] == 'where_want':
+                        state['return_message'] = ''
                         back_id = -3
 
                     print("NavigationScenario back_id =", back_id)
@@ -126,5 +128,7 @@ class NavigationScenario(BaseScenario):
             if state['history_object'] is not None and len(state['history_object']['text']) > 10:
                 result = {'text': models['squad_ru']([state['history_object']['text']], [state['history_user'][-1]])[0]}
             else:
-                result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом.', 'meta':''}
+                result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом. Что Вам нравится?', 'meta':''}
+                state['return_to_id'] = 3
+                state['return_message'] = ''
             return result
