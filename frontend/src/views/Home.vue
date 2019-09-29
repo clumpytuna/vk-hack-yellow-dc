@@ -3,11 +3,7 @@
     <div class="messages-wrapper">
       <div class="messages hide-scrollbar" ref="messages">
         <div v-for="message of messages" class="message-wrapper">
-          <div
-            :class="{'message': true, 'message-question': message.isQuestion, 'message-answer': !message.isQuestion}"
-          >
-            {{ message.text }}
-          </div>
+          <div :class="{'message': true, 'message-question': message.isQuestion, 'message-answer': !message.isQuestion}">{{ message.text }}</div>
         </div>
         <div style="height: 75px; content: '';"></div>
       </div>
@@ -69,6 +65,7 @@
     padding: 7px 15px;
     display: flex;
     align-content: center;
+    white-space: pre-line;
   }
 
   .message-question {
@@ -166,9 +163,8 @@
         formData.append('id', this.dialogueId);
         const requestOptions = { method: 'POST', body: formData };
         const response = await fetch(baseURL + '/response_audio', requestOptions);
-        const result = await response.body.getReader().read();
+        const blob = await response.blob();
 
-        const blob = new Blob([result.value], { type: 'audio/webm;codecs="vorbis"' });
         const url = window.URL.createObjectURL(blob);
         const audio = new Audio();
         audio.src = url;
@@ -176,7 +172,7 @@
       },
       onSendError() {
         this.isLoadingResponse = false;
-        this.addMessage('Хм. Давайте попробуем по другому.', false);
+        this.addMessage('Хм. Давайте попробуем по-другому.', false);
       },
     },
   };
