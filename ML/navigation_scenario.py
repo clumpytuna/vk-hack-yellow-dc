@@ -116,5 +116,5 @@ class NavigationScenario(BaseScenario):
             if len(state['history_text']) > 10:
                 result = {'text': models['squad_ru']([state['history_text']], [state['history_user'][-1]])[0]}
             else:
-                result = {'text': 'Я вас не понял. Давайте поговорим о чем-нибудь другом.', 'meta':''}
+                result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом.', 'meta':''}
             return result
