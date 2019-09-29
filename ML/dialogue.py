@@ -5,16 +5,23 @@ from deeppavlov import configs, build_model
 from ml_utils import lemmatize, apply_lemm
 from path_finder.path import find_path
 from navigation_scenario import NavigationScenario
+from culture_scenario import CultureScenario
+from other_scenario import OtherScenario
+from random_scenario import RandomScenario
 import numpy as np
 
 
 #NAVIGATION 
 navigation_words = 'где находится туалет кафе камера хранения пройти карта столовая куда пойти идем зал найти путь'
-navigation_phrases = ['в каком зале', 'где висит', 'где стоит', 'где найти', 'где выставляется', 'где посмотреть', 'как пройти', 'какой маршрут']
+navigation_phrases = ['в каком зале', 'где висит', 'где находится', 'где стоит', 'где найти', 'где выставляется', 'где посмотреть', 'как пройти', 'какой маршрут']
 
 #CULTURE
+culture_words = 'выставка картины скульптуры расскажи какой технике найди аудио дорожка скачать список покажи книга книги о работа работах жанр годы друзья список изданий каталог почему покажите знаменитые расскажи кто страна РОССИЯ ЕВРОПА регион государство место город местечно край написала написать написал год'
+culture_phrases = ['найти что-то', 'что есть', 'список изданий', 'что посмотреть', 'покажите предметы', 'у вас есть', 'знаменитые картины', 'откуда', 'есть ли','расскажи о', 'создатель', 'художник', 'скульптор']
 
 #OTHER
+other_words = 'будет дата январь февраль март апрель май июнь июль август сентябрь октябрь ноябрь декабрь'
+other_phrases = ['когда будет', 'когда будет выставка', 'дата проведения', 'когда проводится']
 
 def make_find_set(words, phrases):
     lemmed_words = lemmatize(words.lower()).split()
@@ -23,7 +30,9 @@ def make_find_set(words, phrases):
     return find_set
 
 
-find_sets = [make_find_set(navigation_words, navigation_phrases), set(), set()]
+find_sets = [make_find_set(navigation_words, navigation_phrases), 
+             make_find_set(culture_words, culture_phrases), 
+             make_find_set(other_words, other_phrases)]
 
 
 def classify(text, find_sets):
@@ -34,18 +43,21 @@ def classify(text, find_sets):
             if item in lemmed:
                 finded[i] += 1
     result_class = np.argmax(finded)
+    if ('давай познакомимся' in text.lower()) or ('давай поговорим' in text.lower()):
+        result_class = 3
     return result_class
 
 
 class Dialogue:
     def __init__(self, find_sets, models):
-        self.scenarios = [NavigationScenario(), NavigationScenario(), NavigationScenario()]
+        self.scenarios = [NavigationScenario(), CultureScenario(), OtherScenario(), RandomScenario()]
         self.find_sets = find_sets
         self.models = models
         self.state = {}
         self.state['history_user'] = []
         self.state['history_bot'] = []
         self.state['return_to_id'] = -1
+        self.state['history_text'] = ""
     
     def answer(self, text):
         self.state['history_user'].append(text)
@@ -54,7 +66,9 @@ class Dialogue:
         else:
             current_class = classify(text, self.find_sets)
 
-        return self.scenarios[current_class].answer(self.state, self.models)
+        scenario = self.scenarios[current_class]
+        print('\tscenario: ', type(scenario).__name__)
+        return scenario.answer(self.state, self.models)
     
 
 class DialogueHandler:
@@ -66,7 +80,8 @@ class DialogueHandler:
     def __init__(self):
         self.models = {'search': elastic_search, 
                   'ner_model': build_model(configs.ner.ner_ontonotes_bert_mult, download=False),
-                   'find_path': find_path}
+                   'find_path': find_path,
+                    'squad_ru': build_model(configs.squad.squad_ru_bert, download=False)}
         self.dialogues = {}
     
     def process(self, r):

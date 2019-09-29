@@ -46,6 +46,9 @@ def _callback(channel, method, properties, body):
         traceback.print_exc()
         result = {'id': r['id'], 'text': 'Ничего не нашлось :-(', 'meta': ''}
 
+    if type(result['text']) == list:
+        result['text'] = result['text'][0]
+
     result_to_return = {
         'id': result['id'],
         'response': result['text'],
