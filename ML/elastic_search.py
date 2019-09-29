@@ -1,6 +1,8 @@
 import requests
 import json
 
+from hall_map import hall_map
+
 
 ELASTIC_URL_TO_FORMAT = 'http://demo134.bravo.vkhackathon.com:9200/{}/_search'
 
@@ -31,4 +33,9 @@ def elastic_search(dataset: str, fields: list, query: str) -> list:
     if response['hits']['total']['value'] == 0:
         raise ValueError()
 
-    return [h['_source'] for h in response['hits']['hits']]
+    result = [h['_source'] for h in response['hits']['hits']]
+
+    for r in result:
+        r['hall'] = hall_map(r['hall'])
+
+    return result
