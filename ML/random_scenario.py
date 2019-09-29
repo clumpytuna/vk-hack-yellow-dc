@@ -12,10 +12,17 @@ class RandomScenario(BaseScenario):
     
     def answer(self, state, models):
         text = state['history_user'][-1]
+        if 'отзыв' in text.lower():
+            state['return_to_id'] = 3
+            state['return_message'] = 'feedback'
+            return {'text':'Пожалуйста говорите, ваше мнение важно для нас.'}
         try:
             # RETURNS
             if state['return_to_id'] == 3:
                 state['return_to_id'] = -1
+                state['return_message'] = ''
+                if state['return_message'] == 'feedback':
+                    return {'text':'Спасибо! Что еще вас интересует?'}
                 tokens, ners = models['ner_model']([text])
                 tokens = np.array(tokens[0])
                 ners = np.array(ners[0])

@@ -46,6 +46,8 @@ def classify(text, find_sets):
     result_class = np.argmax(finded)
     if ('давай познакомимся' in text.lower()) or ('давай поговорим' in text.lower()) or ('привет' in text.lower()) or ('добрый день' in text.lower()) or ('здравствуйте' in text.lower()):
         result_class = 3
+    if ('отзыв' in text.lower()):
+        result_class = 3
     return result_class
 
 
@@ -59,6 +61,7 @@ class Dialogue:
         self.state['history_bot'] = []
         self.state['return_to_id'] = -1
         self.state['history_object'] = None
+        self.state['return_message'] = ''
     
     def answer(self, text):
         self.state['history_user'].append(text)
