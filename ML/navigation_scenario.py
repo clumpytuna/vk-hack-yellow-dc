@@ -9,7 +9,7 @@ class NavigationScenario(BaseScenario):
     def __init__(self):
         pass
     
-    def answer(state, models):
+    def answer(self, state, models):
         text = state['history_user'][-1]
         # RETURNS
         if state['return_to_id'] == 0:
@@ -43,7 +43,7 @@ class NavigationScenario(BaseScenario):
                 
                 new_text = state['history_user'][-1] # Откуда идет юзер
                 hall_from = int(''.join(list(filter(str.isdigit, new_text.lower()))))
-                path = models['find_path'](buid, str(hall_from), str(hall_to))
+                path = models['find_path'](buld, str(hall_from), str(hall_to))
                 result_text = []
                 for item in path:
                     if item['type'] == 'hall':
@@ -76,8 +76,9 @@ class NavigationScenario(BaseScenario):
         find_words = apply_lemm(['где', 'в каком зале', 'находится', 'висит', 'стоит', 'выставляется'])
         path_words = apply_lemm(['как пройти', 'пройти', 'путь', 'маршрут', 'построй'])
         toilet = apply_lemm(['туалет','гардероб', 'камера хранения', 'камера', 'хранения'])
-        
-        if len(set(find_words) & text_lemm_set) > 0:
+        if len(set(toilet) & text_lemm_set) > 0:
+            return {'text': 'Идите к лестнице, спуститесь на первый этаж. По лестнице у входа спуститесь ниже.', 'meta':''}
+        elif len(set(find_words) & text_lemm_set) > 0:
             for i, cl in enumerate(ners):
                 if 'ORG' in cl:
                     mask[i] = False
@@ -101,5 +102,6 @@ class NavigationScenario(BaseScenario):
             state['return_message'] = 'where'
             result = {'text': 'В каком зале вы сейчас находитесь?', 'meta': ''}
             return result
-        elif len(set(path_words) & text_lemm_set) > 0:
-            return {'text': 'Идите к лестнице, спуститесь на первый этаж. По лестнице у входа спуститесь ниже.'}
+        else:
+            result = {'text': 'Я вас не понял. Давайте поговорим о чем-нибудь другом.', 'meta':''}
+            return result

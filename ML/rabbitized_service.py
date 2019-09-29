@@ -39,25 +39,28 @@ def _callback(channel, method, properties, body):
     # Handler here
     global handler
     result = handler.process(r)
+    result_to_return = {
+        'id': result['id'],
+        'response': result['text'],
+        'meta': result.get('meta', ''),
+    }
     channel_send.basic_publish(
             exchange='',
             routing_key=QUEUE_RESPONSES,
-            body=dumps({
-                'id': result['id'],
-                'response': result['request'],
-                'meta': result['meta'],
-            })
+            body=dumps(result_to_return)
     )
-    print("SENT: id '{}', request '{}', meta '{}'".format(r['id'], r['request'], r['meta']))
+    print("SENT: {}".format(str(result_to_return)))
 
 
 def main():
     _prepare()
 
     channel_receive.basic_consume(QUEUE_REQUESTS, _callback, auto_ack=True)
-
+    
+    print('Starting to consume requests')
     channel_receive.start_consuming()
 
 
 if __name__ == '__main__':
     main()
+

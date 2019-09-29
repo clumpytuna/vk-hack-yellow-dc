@@ -1,6 +1,6 @@
 import sys
 sys.path.append('/home/captain/vk-hack-yellow-dc/')
-from utils import elastic_search
+from utils.elastic_search import elastic_search
 from deeppavlov import configs, build_model
 from ml_utils import lemmatize, apply_lemm
 from path_finder.path import find_path
