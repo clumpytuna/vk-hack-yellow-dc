@@ -23,7 +23,9 @@ class NavigationScenario(BaseScenario):
                     elif state['return_message'] == 'where_want':
                         back_id = -3
 
+                    print("NavigationScenario back_id =", back_id)
                     text = state['history_user'][back_id] # Старый текст, куда хочет юзер
+                    print("HistoryUser at back_id:", text)
                     tokens, ners = models['ner_model']([text])
                     tokens = np.array(tokens[0])
                     ners = np.array(ners[0])

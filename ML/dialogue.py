@@ -69,6 +69,7 @@ class Dialogue:
 
         scenario = self.scenarios[current_class]
         print('\tscenario: ', type(scenario).__name__)
+        print('\tstate:', str(self.state))
         return scenario.answer(self.state, self.models)
     
 
