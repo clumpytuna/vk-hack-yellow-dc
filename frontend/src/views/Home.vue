@@ -81,6 +81,10 @@
     background: #e9e9e9;
     border-radius: 0 var(--radius) var(--radius) var(--radius);
   }
+
+  .increased-font .message {
+    font-size: 24px;
+  }
 </style>
 
 <script>
@@ -91,18 +95,22 @@
   export default {
     name: 'home',
     components: { VoiceInput },
+    props: ['increasedFont'],
+    watch: {
+      async increasedFont(newValue, oldValue) {
+        if (newValue === true && oldValue === false) {
+          await this.sendTextMessage('xvf', false);
+        }
+      },
+    },
     data() {
       return {
         dialogueId: null,
-        messages: [{ text: `Как вам помочь?`, isQuestion: false }],
+        messages: [{ text: 'Привет, я голосовой помощник Пушкинского музея Александр', isQuestion: false }],
         isLoadingResponse: false,
       };
     },
     async mounted() {
-      // for (let i = 0; i < 10; ++i) {
-      //   this.messages.push({ text: `Text ${i}`, isQuestion: i % 2 === 0 });
-      // }
-
       const response = await axios.post('/create', null);
       this.dialogueId = response.data.id;
     },
@@ -119,8 +127,10 @@
         await sleep(500);
         this.scrollToTop();
       },
-      async sendTextMessage(text) {
-        this.addMessage(text, true);
+      async sendTextMessage(text, callAddMessage = true) {
+        if (callAddMessage) {
+          this.addMessage(text, true);
+        }
         this.isLoadingResponse = true;
         try {
           await postForm('/request_text', { id: this.dialogueId, request: text });
