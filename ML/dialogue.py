@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/captain/vk-hack-yellow-dc/')
+sys.path.append('/home/iprovilkov/data/vk-hack-yellow-dc/')
 from elastic_search import elastic_search
 from deeppavlov import configs, build_model
 from ml_utils import lemmatize, apply_lemm

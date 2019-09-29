@@ -91,7 +91,7 @@ class Building:
         return path
 
 
-with open('/home/captain/vk-hack-yellow-dc/path_finder/halls_edges.json') as f:
+with open('/home/iprovilkov/data/vk-hack-yellow-dc/path_finder/halls_edges.json') as f:
     buildings_infos = json.load(f)
     buildings = {}
     for building_info in buildings_infos:
