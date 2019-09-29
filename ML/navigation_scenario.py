@@ -51,7 +51,7 @@ class NavigationScenario(BaseScenario):
                     hall_from = int(''.join(list(filter(str.isdigit, new_text.lower()))))
                     path = models['find_path'](buld, str(hall_from), str(hall_to))
                     result_text = []
-                    for item in path:
+                    for item in path[1:]:
                         if item['type'] == 'hall':
                             result_text.append('Пройдите в зал ' + str(item['index']))
                         else:
