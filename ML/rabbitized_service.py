@@ -44,7 +44,7 @@ def _callback(channel, method, properties, body):
         result = handler.process(r)
     except:
         traceback.print_exc()
-        result = {'id': r['id'], 'response': 'Ничего не нашлось :-(', 'meta': ''}
+        result = {'id': r['id'], 'text': 'Ничего не нашлось :-(', 'meta': ''}
 
     result_to_return = {
         'id': result['id'],
