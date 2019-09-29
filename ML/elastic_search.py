@@ -35,7 +35,8 @@ def elastic_search(dataset: str, fields: list, query: str) -> list:
 
     result = [h['_source'] for h in response['hits']['hits']]
 
-    for i in range(len(result)):
-        result[i]['hall'] = hall_map(result[i]['hall'])
+    if 'objects' in dataset:
+        for i in range(len(result)):
+            result[i]['hall'] = hall_map(result[i]['hall'])
 
     return result
