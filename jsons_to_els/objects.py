@@ -3,6 +3,7 @@
 import requests
 import sys
 import json
+import re
 
 
 URL_ELS_WITH_FORMAT = 'http://localhost:9200/{}/_doc/{}'
@@ -27,6 +28,8 @@ def main():
 
     index = sys.argv[2]
 
+    tag_remover = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+
     jsons = json.loads(raw)
     for data_id in jsons.keys():
         data = jsons[data_id]
@@ -38,7 +41,7 @@ def main():
             'type': data['type']['ru'],
             'country': data['country']['ru'] if data['country'] != '' else '',
             'name': data['name']['ru'],
-            'text': data['text']['ru'],
+            'text': re.sub(tag_remover, '', data['text']['ru']),
             'from': data['from']['ru'],
             'img': data['gallery']['1']['id01'] if data['gallery'] != '' else '',
             'building': data.get('building', ''),
