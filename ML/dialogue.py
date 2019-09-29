@@ -53,8 +53,8 @@ class Dialogue:
             current_class = self.state['return_to_id']
         else:
             current_class = classify(text, self.find_sets)
-        try:
-            return self.scenarios[current_class].answer(self.state, self.models)
+
+        return self.scenarios[current_class].answer(self.state, self.models)
     
 
 class DialogueHandler:
