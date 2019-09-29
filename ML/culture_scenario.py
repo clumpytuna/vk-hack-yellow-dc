@@ -78,7 +78,7 @@ class CultureScenario(BaseScenario):
             raise Exception()
         except:
             traceback.print_exc()
-            if len(state['history_object']['text']) > 10:
+            if state['history_object'] is not None and len(state['history_object']['text']) > 10:
                 result = {'text': models['squad_ru']([state['history_object']['text']], [state['history_user'][-1]])[0]}
             else:
                 result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом.', 'meta':''}

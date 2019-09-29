@@ -103,7 +103,7 @@ class NavigationScenario(BaseScenario):
                     print('Search result: {}'.format(best_search))
                 hall = best_search['hall']
                 if hall == '':
-                    return {'text': 'К сожалению, этот экспонат сейчас хранится в архиве. Подсказать что-нибудь ещё?'}
+                    return {'text': 'К сожалению, этот экспонат сейчас хранится в архиве, но Вы можете <a href="https://pushkinmuseum.art{}">посмотреть его на сайте Пушкинского музея</a>. Подсказать что-нибудь ещё?'.format(best_search['img'])}
                 building = best_search['building']
                 state['history_object'] = best_search
                 if building == '117':
@@ -123,7 +123,7 @@ class NavigationScenario(BaseScenario):
             raise Exception()
         except:
             traceback.print_exc()
-            if len(state['history_object']['text']) > 10:
+            if state['history_object'] is not None and len(state['history_object']['text']) > 10:
                 result = {'text': models['squad_ru']([state['history_object']['text']], [state['history_user'][-1]])[0]}
             else:
                 result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом.', 'meta':''}

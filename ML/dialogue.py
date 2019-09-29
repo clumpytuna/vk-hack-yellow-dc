@@ -44,7 +44,7 @@ def classify(text, find_sets):
                 print('[debug] found item {} from set {} in lemma {}'.format(item, i, lemmed))
                 finded[i] += 1
     result_class = np.argmax(finded)
-    if ('давай познакомимся' in text.lower()) or ('давай поговорим' in text.lower()):
+    if ('давай познакомимся' in text.lower()) or ('давай поговорим' in text.lower()) or ('привет' in text.lower()) or ('добрый день' in text.lower()) or ('здравствуйте' in text.lower()):
         result_class = 3
     return result_class
 
