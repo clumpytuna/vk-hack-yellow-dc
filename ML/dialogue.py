@@ -58,7 +58,7 @@ class Dialogue:
         self.state['history_user'] = []
         self.state['history_bot'] = []
         self.state['return_to_id'] = -1
-        self.state['history_text'] = ""
+        self.state['history_object'] = None
     
     def answer(self, text):
         self.state['history_user'].append(text)

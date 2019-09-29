@@ -43,7 +43,7 @@ class NavigationScenario(BaseScenario):
                     print('Search result: {}'.format(best_search))
                     hall_to = best_search['hall']
                     building = best_search['building']
-                    state['history_text'] = best_search['text']
+                    state['history_object'] = best_search
                     if building == '117':
                         buld = 'gallery'
                     else:
@@ -81,25 +81,31 @@ class NavigationScenario(BaseScenario):
             mask = ners != 'O'
             lemmatize_text = lemmatize(text.lower())
             text_lemm_set = set(lemmatize_text.split())
+            this_words = apply_lemm(['эта', 'это', 'эту', 'он', 'она', 'её', 'ее', 'его', 'та'])
             find_words = apply_lemm(['где', 'в каком зале', 'находится', 'висит', 'стоит', 'выставляется'])
             path_words = apply_lemm(['как пройти', 'пройти', 'путь', 'маршрут', 'построй'])
-            toilet = apply_lemm(['туалет','гардероб', 'камера хранения', 'камера', 'хранения', 'уборная'])
+            toilet = apply_lemm(['туалет', 'гардероб', 'камера хранения', 'камера', 'хранения', 'уборная'])
             if len(set(toilet) & text_lemm_set) > 0:
                 return {'text': 'Идите к лестнице, спуститесь на первый этаж. По лестнице у входа спуститесь ниже.', 'meta':''}
             elif len(set(find_words) & text_lemm_set) > 0:
-                for i, cl in enumerate(ners):
-                    if 'ORG' in cl:
-                        mask[i] = False
-                search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask]) if len(tokens[mask]) != 0 else text]
-                print('Search queue: {}'.format(str(search_queue)))
-                search_result = models['search'](*search_queue) 
-                best_search = search_result[0]
-                print('Search result: {}'.format(best_search))
+                if state['history_object'] is not None and len(set(this_words) & text_lemm_set) > 0:
+                    best_search = state['history_object']['name']
+                    state['history_user'][-1] = best_search['name']
+                    print('Short path with history_object: {}'.format(best_search))
+                else:
+                    for i, cl in enumerate(ners):
+                        if 'ORG' in cl:
+                            mask[i] = False
+                    search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask]) if len(tokens[mask]) != 0 else text]
+                    print('Search queue: {}'.format(str(search_queue)))
+                    search_result = models['search'](*search_queue)
+                    best_search = search_result[0]
+                    print('Search result: {}'.format(best_search))
                 hall = best_search['hall']
                 if hall == '':
                     return {'text': 'К сожалению, этот экспонат сейчас хранится в архиве. Подсказать что-нибудь ещё?'}
                 building = best_search['building']
-                state['history_text'] = best_search['text']
+                state['history_object'] = best_search
                 if building == '117':
                     buld = 'gallery'
                 else:
@@ -109,7 +115,7 @@ class NavigationScenario(BaseScenario):
                 state['return_message'] = 'want'
                 result = {'text': result_text, 'meta': ""}
                 return result
-            elif len(set(path_words) & text_lemm_set) > 0: # Хочу пройти к 
+            elif len(set(path_words) & text_lemm_set) > 0:  # Хочу пройти к
                 state['return_to_id'] = 0
                 state['return_message'] = 'where'
                 result = {'text': 'В каком зале Вы сейчас находитесь?', 'meta': ''}
@@ -117,8 +123,8 @@ class NavigationScenario(BaseScenario):
             raise Exception()
         except:
             traceback.print_exc()
-            if len(state['history_text']) > 10:
-                result = {'text': models['squad_ru']([state['history_text']], [state['history_user'][-1]])[0]}
+            if len(state['history_object']['text']) > 10:
+                result = {'text': models['squad_ru']([state['history_object']['text']], [state['history_user'][-1]])[0]}
             else:
                 result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом.', 'meta':''}
             return result

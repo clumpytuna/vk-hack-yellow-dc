@@ -28,17 +28,15 @@ class RandomScenario(BaseScenario):
                 best_search = search_result[0]
                 print('Search result: {}'.format(best_search))
                 result_text = "Рекомендую посмотреть экспонат \"" + str(best_search['name']) + "\". Подсказать что-нибудь ещё?"
-                state['history_text'] = best_search['text']
+                state['history_object'] = best_search
                 return {'text':result_text}
             # Returns
             state['return_to_id'] = 3
             return {'text': "Что вам нравится?"}
-            raise Exception()
         except:
             traceback.print_exc()
-            if len(state['history_text']) > 10:
-                result = {'text': models['squad_ru']([state['history_text']], [state['history_user'][-1]])[0]}
+            if len(state['history_object']['text']) > 10:
+                result = {'text': models['squad_ru']([state['history_object']['text']], [state['history_user'][-1]])[0]}
             else:
                 result = {'text': 'Я вас не понял. Давайте поговорим о чём-нибудь другом.', 'meta':''}
             return result
-        
