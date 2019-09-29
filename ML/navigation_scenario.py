@@ -31,7 +31,7 @@ class NavigationScenario(BaseScenario):
                     if 'ORG' in cl:
                         mask[i] = False
                 # a list of objects matching the given query, without elastic-specific fields
-                search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask])]
+                search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask]) if len(tokens[mask]) != 0 else text]
                 print('Search queue: {}'.format(str(search_queue)))
                 search_result = models['search'](*search_queue)
                 best_search = search_result[0]
@@ -84,7 +84,7 @@ class NavigationScenario(BaseScenario):
             for i, cl in enumerate(ners):
                 if 'ORG' in cl:
                     mask[i] = False
-            search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask])]
+            search_queue = ['objects', ['name', 'authors'], ' '.join(tokens[mask]) if len(tokens[mask]) != 0 else text]
             print('Search queue: {}'.format(str(search_queue)))
             search_result = models['search'](*search_queue) 
             best_search = search_result[0]
