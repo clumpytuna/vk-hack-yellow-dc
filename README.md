@@ -10,7 +10,7 @@
 
 ### Description: Вы можете скачать .apk файл и установить на свой android [Link to the .apk file](https://demo134.bravo.vkhackathon.com/pushkinmuseum.apk).
 
-Также существует возможность открыть приложение по ссылке в Chrome и даже установить его как приложение, однако этот вариант опционален. Работоспособность гарантируется только для [.apk](https://demo134.bravo.vkhackathon.com)  и установки на Android :)  .
+Также существует возможность открыть приложение по [ссылке](https://demo134.bravo.vkhackathon.com) в Chrome и даже установить его как приложение, однако этот вариант опционален. Работоспособность гарантируется только для [.apk](https://demo134.bravo.vkhackathon.com/pushkinmuseum.apk)  и установки на Android :)
 
 
 
