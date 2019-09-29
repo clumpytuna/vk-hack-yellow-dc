@@ -89,7 +89,7 @@ class NavigationScenario(BaseScenario):
                 return {'text': 'Идите к лестнице, спуститесь на первый этаж. По лестнице у входа спуститесь ниже.', 'meta':''}
             elif len(set(find_words) & text_lemm_set) > 0:
                 if state['history_object'] is not None and len(set(this_words) & text_lemm_set) > 0:
-                    best_search = state['history_object']['name']
+                    best_search = state['history_object']
                     state['history_user'][-1] = best_search['name']
                     print('Short path with history_object: {}'.format(best_search))
                 else:
