@@ -48,6 +48,8 @@ def classify(text, find_sets):
         result_class = 3
     if ('отзыв' in text.lower()):
         result_class = 3
+    if ('xvf' in text.lower()):
+        result_class = 3
     return result_class
 
 
