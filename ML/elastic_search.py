@@ -4,7 +4,7 @@ import json
 from hall_map import hall_map
 
 
-ELASTIC_URL_TO_FORMAT = 'http://ec2-52-59-255-231.eu-central-1.compute.amazonaws.com:9200/{}/_search'
+ELASTIC_URL_TO_FORMAT = 'http://ec2-18-185-102-119.eu-central-1.compute.amazonaws.com:9200/{}/_search'
 
 
 def elastic_search(dataset: str, fields: list, query: str) -> list:

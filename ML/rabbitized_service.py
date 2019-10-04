@@ -25,7 +25,7 @@ def _prepare():
 
     credentials = pika.PlainCredentials('ydc', 'ydcpasswd')
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='ec2-52-59-255-231.eu-central-1.compute.amazonaws.com', credentials=credentials))
+        pika.ConnectionParameters(host='ec2-18-185-102-119.eu-central-1.compute.amazonaws.com', credentials=credentials))
 
     channel_send = connection.channel()
     channel_send.queue_declare(queue=QUEUE_RESPONSES)
