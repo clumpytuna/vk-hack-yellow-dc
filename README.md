@@ -8,9 +8,9 @@
 
 ### Punchline: В Пушкинский вместе с Александром Сергеевичем!
 
-### Description: Вы можете скачать [.apk](https://demo134.bravo.vkhackathon.com/pushkinmuseum.apk) файл и установить приложение на свой android.
+### Description: Заходите к [нам](https://demo134.bravo.vkhackathon.com/pushkinmuseum.apk)!
 
-Также существует возможность открыть приложение по [ссылке](https://demo134.bravo.vkhackathon.com) в Chrome и даже установить его как приложение, однако этот вариант опционален. Работоспособность гарантируется только для [.apk](https://demo134.bravo.vkhackathon.com/pushkinmuseum.apk)  и установки на Android :)
+Также существует возможность открыть приложение по [ссылке](https://demo134.bravo.vkhackathon.com) в Chrome и даже установить его как приложение, однако этот вариант опционален. Работоспособность гарантируется только для Chrome :)
 
 
 
@@ -21,7 +21,7 @@
 
 
 
-### Или просто полюбуйтесь скриншотами
+### И полюбуйтесь скриншотами
 
 <img src="./img/1.png" width="540" />
 
